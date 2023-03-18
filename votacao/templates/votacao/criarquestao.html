@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar Questão</title>
+</head>
+<body>
+    <form action="{% url 'votacao:editarquestao' questao_id %}" method="post">
+        <h2>Criar Questão</h2>
+        <br>
+        <label>Nome da Questão:</label>
+        <input type="text" value="Questão /">
+        <input type="submit" value="Submeter" />
+    </form>
+
+</body>
+</html>
