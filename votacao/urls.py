@@ -2,6 +2,7 @@ from django.urls import include, path
 from . import views
 
 # (. significa que importa views da mesma directoria)
+app_name = 'votacao'
 urlpatterns = [
     path("", views.index, name="index"),
     # ex: votacao/1
