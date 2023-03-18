@@ -5,11 +5,12 @@
     <title>Criar Questão</title>
 </head>
 <body>
-    <form action="{% url 'votacao:editarquestao' questao_id %}" method="post">
-        <h2>Criar Questão</h2>
-        <br>
-        <label>Nome da Questão:</label>
-        <input type="text" value="Questão /">
+
+    <h2>Criar Questão</h2>
+    <form action="{% url 'votacao:criar' %}" method="POST">
+        {% csrf_token %}
+        <label for="questao_texto">Nome da Questão:</label>
+        <input type="text" value="Questão" id="questao_texto" name="questao_texto"/>
         <input type="submit" value="Submeter" />
     </form>
 

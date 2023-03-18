@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from django.http import Http404, HttpResponse,HttpResponseRedirect
+from django.utils import timezone
+
 from .models import Questao, Opcao
 from django.template import loader
 from django.urls import reverse
 from django.shortcuts import get_object_or_404, render
+
 
 # Create your views here.
 
@@ -18,10 +21,14 @@ def detalhe(request, questao_id):
  questao = get_object_or_404(Questao, pk=questao_id)
  return render(request, 'votacao/detalhe.html', {'questao': questao})
 
-def criarquestao(request):
- q = Questao()
- return render(request, 'votacao/criarquestao.html')
 
+def criar_questao(request):
+ if request.method == 'POST':
+  questao_texto = request.POST['questao_texto']
+  questao = Questao.objects.create(questao_texto=questao_texto, pub_data=timezone.now())
+  return render(request, 'votacao/index.html')
+ else:
+  return render(request, 'votacao/criarquestao.html')
 
 def resultados(request, questao_id):
  response = "Estes sao os resultados da questao %s."
