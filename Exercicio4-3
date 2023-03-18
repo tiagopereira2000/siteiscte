@@ -1,0 +1,18 @@
+a)
+In [1]:Questao.objects.all()
+Out[2]:<QuerySet [<Questao: Entao sempre nos decidimos a fazer uma festa no fim do ano?>, <Questao: Gostas de programar
+para a internet?>, <Questao: De 1 a 5, indique a sua dificuldade em programar com Django>]>
+
+b)
+In [3]:Opcao.objects.filter(questao__questao_texto__startswith = "Gostas de programar")
+Out[4]:<QuerySet [<Opcao: Adoro>, <Opcao: Gosto>, <Opcao: Mais ou menos>, <Opcao: Nem por isso>, <Opcao: Detesto>]>
+
+c)
+In [5]:Opcao.objects.filter(questao__questao_texto__startswith = "Gostas de programar", votos__gt=2)
+Out[6]:<QuerySet [<Opcao: Gosto>, <Opcao: Mais ou menos>]>
+
+d)
+In [7]:Questao.objects.filter(pub_data__year__gt=timezone.now().year -3)
+Out[8]:QuerySet [<Questao: Entao sempre nos decidimos a fazer uma festa no fim do ano?>, <Questao: Gostas de programar
+para a internet?>, <Questao: De 1 a 5, indique a sua dificuldade em programar com Django>]>
+
