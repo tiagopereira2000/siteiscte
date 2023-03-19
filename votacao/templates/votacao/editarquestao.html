@@ -6,6 +6,12 @@
 </head>
 <body>
 <h1>{{ questao.questao_texto }}</h1>
+<form action="{% url 'votacao:editar' questao.id %}" method="POST">
+    {% csrf_token %}
+    <label for="opcao_texto">Nome da Questão:</label>
+    <input type="text" value="Nova Opção" id="opcao_texto" name="opcao_texto"/>
+    <input type="submit" value="Gravar nova opção" />
+</form>
 
 </body>
 </html>

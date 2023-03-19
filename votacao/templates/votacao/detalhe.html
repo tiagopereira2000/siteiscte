@@ -16,5 +16,12 @@ value="{{ opcao.id }}" />
 {% endfor %}
 <input type="submit" value="Voto" />
 </form>
+
+<button>
+    <a href="{% url 'votacao:editar' questao.id %}">
+        adicionar opção
+    </a>
+</button>
+
 </body>
 </html>

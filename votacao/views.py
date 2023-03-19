@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import Http404, HttpResponse,HttpResponseRedirect
 from django.utils import timezone
 
@@ -6,6 +6,7 @@ from .models import Questao, Opcao
 from django.template import loader
 from django.urls import reverse
 from django.shortcuts import get_object_or_404, render
+
 
 
 # Create your views here.
@@ -26,13 +27,21 @@ def criar_questao(request):
  if request.method == 'POST':
   questao_texto = request.POST['questao_texto']
   questao = Questao.objects.create(questao_texto=questao_texto, pub_data=timezone.now())
-  return render(request, 'votacao/index.html')
+  return render(request, 'votacao/detalhe.html', {'questao':questao})
  else:
   return render(request, 'votacao/criarquestao.html')
 
-def resultados(request, questao_id):
- response = "Estes sao os resultados da questao %s."
- return HttpResponse(response % questao_id)
+def add_opcao(request, questao_id):
+ questao= get_object_or_404(Questao, pk=questao_id)
+ context = {'questao': questao}
+ try:
+   opcao_texto = request.POST['opcao_texto']
+   questao.opcao_set.create(opcao_texto=opcao_texto, votos = 0)
+   return HttpResponseRedirect(reverse('votacao:detalhe', args=(questao_id,)))
+ except KeyError:
+  return render(request, 'votacao/editarquestao.html', context)
+
+
 
 def voto(request, questao_id):
  questao = get_object_or_404(Questao, pk=questao_id)
