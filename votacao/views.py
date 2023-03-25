@@ -19,8 +19,7 @@ def index(request):
         return render(request, 'votacao/login.html')
     else:
         latest_question_list = Questao.objects.order_by('-pub_data')[:5]
-        context = {'latest_question_list': latest_question_list,
-             'username': this_username}
+        context = {'latest_question_list': latest_question_list}
         return render(request, 'votacao/index.html', context)
 
 # def index(request):
