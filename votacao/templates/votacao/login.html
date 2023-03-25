@@ -7,12 +7,19 @@
 <body>
 <form action="{% url 'votacao:loginview' %}" method="POST">
     {% csrf_token %}
-    <label for="username"></label>
+    <label for="username">Username</label>
     <input type="text" id="username" name="username"/>
-    <label for="password"></label>
+    <br>
+    <label for="password">Password</label>
     <input type="text" id="password" name="password"/>
+    <br>
     <input type="submit" value="login" id="login_submit"/>
 </form>
 
-</body>
+<button>
+    <!--  href -->
+    <a href="{% url 'votacao:registo' %}">
+        registo
+    </a>
+</button>
 </html>
