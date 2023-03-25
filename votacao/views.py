@@ -16,7 +16,7 @@ from django.contrib.auth import authenticate, login
 
 def index(request):
     if not request.user.is_authenticated:
-        return render(request, 'my_app/login_error.html')
+        return render(request, 'votacao/login.html')
     else:
         latest_question_list = Questao.objects.order_by('-pub_data')[:5]
         context = {'latest_question_list': latest_question_list,
