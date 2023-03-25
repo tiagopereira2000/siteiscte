@@ -11,17 +11,31 @@ id="opcao{{ forloop.counter }}"
 value="{{ opcao.id }}" />
 <label for="opcao{{ forloop.counter }}">
 {{ opcao.opcao_texto }}
+
 </label>
 <br />
 {% endfor %}
 <input type="submit" value="Voto" />
 </form>
-
 <button>
     <a href="{% url 'votacao:editar' questao.id %}">
-        adicionar opção
+        Adicionar opção
     </a>
 </button>
+
+<button>
+    <a href="{% url 'votacao:apagar_opcao' questao.id %}">
+        Apagar opção
+    </a>
+</button>
+
+
+<form method="POST" action="{% url 'votacao:apagar_questao' questao.id %}">
+    {% csrf_token %}
+    <button type="submit">Apagar Questão</button>
+</form>
+
+
 
 </body>
 </html>

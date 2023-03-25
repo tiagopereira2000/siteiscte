@@ -31,6 +31,33 @@ def criar_questao(request):
  else:
   return render(request, 'votacao/criarquestao.html')
 
+def apagar_questao(request, questao_id):
+  questao = Questao.objects.get(id=questao_id)
+  questao.delete()
+  latest_question_list = Questao.objects.order_by('-pub_data')[:5]
+  context = {'latest_question_list': latest_question_list}
+  return render(request, 'votacao/index.html',context)
+
+def apagar_opcao(request, questao_id):
+    questao = get_object_or_404(Questao, pk=questao_id)
+    context = {'questao': questao}
+    try:
+        opcao_seleccionada = questao.opcao_set.get(pk=request.POST['opcao'])
+    except (KeyError, Opcao.DoesNotExist):
+        # Apresenta de novo o form para votar
+        return render(request, 'votacao/apagaopcao.html', {
+            'questao': questao,
+            'error_message': "Não escolheu uma opção",
+        })
+    else:
+        opcao_seleccionada.delete()
+        # Retorne sempre HttpResponseRedirect depois de
+        # tratar os dados POST de um form
+        # pois isso impede os dados de serem tratados
+        # repetidamente se o utilizador
+        # voltar para a página web anterior.
+    return render(request, 'votacao/detalhe.html',context)
+
 def add_opcao(request, questao_id):
  questao= get_object_or_404(Questao, pk=questao_id)
  context = {'questao': questao}
