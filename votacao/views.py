@@ -25,6 +25,23 @@ def index(request):
  latest_question_list = Questao.objects.order_by('-pub_data')[:5]
  context = {'latest_question_list': latest_question_list}
  return render(request, 'votacao/index.html', context)
+
+def registo(request):
+ if request.method == 'POST':
+  try:
+   novo_user = User.objects.create_user(username=request.POST['username'],
+                            email=request.POST['email'],
+                            password=request.POST['password'])
+   novo_aluno = Aluno(user=novo_user, curso=request.POST['curso'])
+   novo_aluno.save()
+   return render(request, 'votacao/home', {'username': novo_user.username})
+
+  except KeyError:
+   return KeyError
+ else:
+  return render(request, 'votacao/registo.html')
+
+
 def loginview(request):
  if request.method == 'POST':
   # login
