@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<form action="{% url 'votacao:loginview' %}" method="POST">
+    {% csrf_token %}
+    <label for="username"></label>
+    <input type="text" id="username" name="username"/>
+    <label for="password"></label>
+    <input type="text" id="password" name="password"/>
+    <input type="submit" value="login" id="login_submit"/>
+</form>
+
+</body>
+</html>
