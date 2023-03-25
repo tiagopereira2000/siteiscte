@@ -20,5 +20,9 @@ urlpatterns = [
     #registo
     path('registo', views.registo, name="registo"),
 
+    path('<int:questao_id>/apagar_questao', views.apagar_questao, name='apagar_questao'),
+
+    path('<int:questao_id>/apagar_opcao', views.apagar_opcao, name='apagar_opcao'),
+
 
 ]
