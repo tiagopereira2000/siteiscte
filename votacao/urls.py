@@ -15,4 +15,10 @@ urlpatterns = [
     path('criarquestao', views.criar_questao, name='criar'),
     #ex: votacao/3/editar
     path('<int:questao_id>/editar', views.add_opcao, name="editar"),
+
+    path('login', views.loginview, name="loginview"),
+    #registo
+    path('registo', views.registo, name="registo"),
+
+
 ]
