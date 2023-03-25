@@ -14,17 +14,19 @@ from django.contrib.auth import authenticate, login
 # Create your views here.
 
 
-# def index(request, this_username):
-#  latest_question_list = Questao.objects.order_by('-pub_data')[:5]
-#   context = {'latest_question_list': latest_question_list,
-#              'username': this_username}
-#
-#  return render(request, 'votacao/index.html', context)
-
 def index(request):
- latest_question_list = Questao.objects.order_by('-pub_data')[:5]
- context = {'latest_question_list': latest_question_list}
- return render(request, 'votacao/index.html', context)
+    if not request.user.is_authenticated:
+        return render(request, 'my_app/login_error.html')
+    else:
+        latest_question_list = Questao.objects.order_by('-pub_data')[:5]
+        context = {'latest_question_list': latest_question_list,
+             'username': this_username}
+        return render(request, 'votacao/index.html', context)
+
+# def index(request):
+#  latest_question_list = Questao.objects.order_by('-pub_data')[:5]
+#  context = {'latest_question_list': latest_question_list}
+#  return render(request, 'votacao/index.html', context)
 
 def registo(request):
  if request.method == 'POST':
