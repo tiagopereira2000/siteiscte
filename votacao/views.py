@@ -36,7 +36,7 @@ def registo(request):
                             password=request.POST['password'])
    novo_aluno = Aluno(user=novo_user, curso=request.POST['curso'])
    novo_aluno.save()
-   return render(request, 'votacao/home', {'username': novo_user.username})
+   return render(request, 'votacao/index.html', {'username': novo_user.username})
 
   except KeyError:
    return KeyError
@@ -56,7 +56,8 @@ def loginview(request):
     # utilizador está registado
     login(request, user)
     # ERRO
-    HttpResponse(redirect('votacao:index', args=(this_username,)))
+    # HttpResponse(redirect('votacao:index', args=(this_username,)))
+    return render(request, 'votacao/index.html')
    else:
     # utilizador não se encontra na BD
     HttpResponseRedirect(reverse('votacao:loginview'))
