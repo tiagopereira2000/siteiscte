@@ -5,7 +5,8 @@
     <title>Home</title>
 </head>
 <body>
-<header>{{ username }}</header>
+<header>Bem vindo(a)! {{ user.username }}</header>
+<p>numero de questões respondidas: {{ user.questoes_respondidas }}</p>
 {% if latest_question_list %}
 <ul>
  {% for questao in latest_question_list %}

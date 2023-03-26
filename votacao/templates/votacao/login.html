@@ -5,21 +5,13 @@
     <title>Login</title>
 </head>
 <body>
-<form action="{% url 'votacao:loginview' %}" method="POST">
+{% block content %}
+<form method="post">
     {% csrf_token %}
-    <label for="username">Username</label>
-    <input type="text" id="username" name="username"/>
-    <br>
-    <label for="password">Password</label>
-    <input type="text" id="password" name="password"/>
-    <br>
+    {{ form.as_p }}
     <input type="submit" value="login" id="login_submit"/>
 </form>
-
-<button>
-    <!--  href -->
-    <a href="{% url 'votacao:registo' %}">
-        registo
-    </a>
-</button>
+<a href="{% url 'votacao:registo' %}">Não tem conta? Registre-se aqui</a>
+{% endblock %}
+</body>
 </html>

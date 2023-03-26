@@ -10,61 +10,47 @@ from django.shortcuts import render
 from .models import Questao
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-
-def index(request):
-    if not request.user.is_authenticated:
-        return render(request, 'votacao/login.html')
-    else:
-        latest_question_list = Questao.objects.order_by('-pub_data')[:5]
-        context = {'latest_question_list': latest_question_list}
-        return render(request, 'votacao/index.html', context)
-
-# def index(request):
-#  latest_question_list = Questao.objects.order_by('-pub_data')[:5]
-#  context = {'latest_question_list': latest_question_list}
-#  return render(request, 'votacao/index.html', context)
-
-def registo(request):
- if request.method == 'POST':
-  try:
-   novo_user = User.objects.create_user(username=request.POST['username'],
-                            email=request.POST['email'],
-                            password=request.POST['password'])
-   novo_aluno = Aluno(user=novo_user, curso=request.POST['curso'])
-   novo_aluno.save()
-   return render(request, 'votacao/index.html', {'username': novo_user.username})
-
-  except KeyError:
-   return KeyError
- else:
-  return render(request, 'votacao/registo.html')
-
+@login_required
+def home(request):
+    latest_question_list = Questao.objects.order_by('-pub_data')[:5]
+    context = {'latest_question_list': latest_question_list}
+    return render(request, 'votacao/home.html', context)
 
 def loginview(request):
- if request.method == 'POST':
-  # login
-  try:
-   this_username = request.POST.get("username")
-   this_password = request.POST.get("password")
-   # autenticacao USER
-   user = authenticate(username=this_username, password=this_password)
-   if user is not None:
-    # utilizador está registado
-    login(request, user)
-    # ERRO
-    # HttpResponse(redirect('votacao:index', args=(this_username,)))
-    return render(request, 'votacao/index.html')
-   else:
-    # utilizador não se encontra na BD
-    HttpResponseRedirect(reverse('votacao:loginview'))
-  except KeyError:
-   ## error page
-   Http404(KeyError)
- else:
-  return render(request, 'votacao/login.html')
+    form = AuthenticationForm(request, data=request.POST or None)
+    if form.is_valid():
+        user = form.get_user()
+        login(request, user)
+        latest_question_list = Questao.objects.order_by('-pub_data')[:5]
+        context = {'latest_question_list': latest_question_list,
+                   'user': user}
+        return render(request, 'votacao/home.html', context)
+    return render(request, 'votacao/login.html', {'form': form})
+
+from .forms import AlunoRegistrationForm
+def registo(request):
+    if request.method == 'POST':
+        form = AlunoRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            Aluno.objects.create(
+                user=user,
+                curso=form.cleaned_data.get('curso')
+            )
+            return redirect('loginview')
+    else:
+        form = AlunoRegistrationForm()
+    return render(request, 'votacao/registo.html', {'form': form})
+
+
+
 
 def detalhe(request, questao_id):
  questao = get_object_or_404(Questao, pk=questao_id)
@@ -84,7 +70,7 @@ def apagar_questao(request, questao_id):
   questao.delete()
   latest_question_list = Questao.objects.order_by('-pub_data')[:5]
   context = {'latest_question_list': latest_question_list}
-  return render(request, 'votacao/index.html',context)
+  return render(request, 'votacao/home.html', context)
 
 def apagar_opcao(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
@@ -104,10 +90,10 @@ def apagar_opcao(request, questao_id):
         # pois isso impede os dados de serem tratados
         # repetidamente se o utilizador
         # voltar para a página web anterior.
-    return render(request, 'votacao/detalhe.html',context)
+    return render(request, 'votacao/detalhe.html', context)
 
 def add_opcao(request, questao_id):
- questao= get_object_or_404(Questao, pk=questao_id)
+ questao = get_object_or_404(Questao, pk=questao_id)
  context = {'questao': questao}
  try:
    opcao_texto = request.POST['opcao_texto']
