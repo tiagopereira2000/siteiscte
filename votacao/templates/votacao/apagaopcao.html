@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+{% extends "votacao/home.html" %}
 <html lang="en">
 <body>
+{% block content %}
 <h1>{{ questao.questao_texto }}</h1>
 <form action="{% url 'votacao:apagar_opcao' questao.id%}"
 method="post">
@@ -18,4 +20,5 @@ value="{{ opcao.id }}" />
 <input type="submit" value="Apagar Opcão" />
 </form>
 </body>
+{% endblock %}
 </html>

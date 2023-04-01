@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'votacao/css/mystyle.css'%}">
+
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>{% block titulo %} Template base {% endblock %}</title>
 </head>
+
 <body>
-<header>Bem vindo(a)! {{ user.username }}</header>
+<header><h1> Este é o header (definido no template base)</h1></header>
+<nav>
+<a href={% url 'votacao:home' %}>Home</a>
+<a href={% url 'votacao:loginview' %}>Mudar de conta</a>
+{% block outros_links %}
+
+{% endblock %}
+</nav>
+{% block content %}
 <p>numero de questões respondidas: {{ user.questoes_respondidas }}</p>
 {% if latest_question_list %}
 <ul>
@@ -26,6 +38,8 @@
         Criar Questão
     </a>
 </button>
+{% endblock %}
 </body>
+
 
 </html>

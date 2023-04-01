@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
+{% extends "votacao/home.html" %}
+{% block outros_links %}
+    <a href="{% url 'votacao:editar' questao.id %}">
+        Adicionar opção
+    </a>
+    <a href="{% url 'votacao:apagar_opcao' questao.id %}">
+        Apagar opção
+    </a>
+{% endblock %}
+{% block content %}
 <body>
+
 <h1>{{ questao.questao_texto }}</h1>
 <form action="{% url 'votacao:voto' questao.id %}"
 method="post">
@@ -17,17 +29,6 @@ value="{{ opcao.id }}" />
 {% endfor %}
 <input type="submit" value="Voto" />
 </form>
-<button>
-    <a href="{% url 'votacao:editar' questao.id %}">
-        Adicionar opção
-    </a>
-</button>
-
-<button>
-    <a href="{% url 'votacao:apagar_opcao' questao.id %}">
-        Apagar opção
-    </a>
-</button>
 
 
 <form method="POST" action="{% url 'votacao:apagar_questao' questao.id %}">
@@ -38,4 +39,5 @@ value="{{ opcao.id }}" />
 
 
 </body>
+{% endblock %}
 </html>

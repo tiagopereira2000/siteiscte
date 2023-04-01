@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+{% extends "votacao/home.html" %}
 <html lang="en">
+{% block content %}
 <body>
 <h1>{{ questao.questao_texto }}</h1>
 <ul>
@@ -13,4 +15,5 @@ voto{{ opcao.votos|pluralize }}</li>
 novamente?</a>
 
 </body>
+{% endblock %}
 </html>
