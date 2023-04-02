@@ -15,7 +15,6 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-@login_required
 def home(request):
     latest_question_list = Questao.objects.order_by('-pub_data')[:5]
     context = {'latest_question_list': latest_question_list}
