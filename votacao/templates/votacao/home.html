@@ -2,25 +2,36 @@
 <html lang="en">
 <head>
     {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'votacao/css/mystyle.css'%}">
-
+    <link rel="stylesheet" type="text/css" href="{% static 'votacao/css/mystyle.css'%}">
     <meta charset="UTF-8">
     <title>{% block titulo %} Template base {% endblock %}</title>
 </head>
 
 <body>
-<header><h1> Este é o header (definido no template base)</h1></header>
-<nav>
-<a href={% url 'votacao:home' %}>Home</a>
-<a href={% url 'votacao:loginview' %}>Mudar de conta</a>
-{% block outros_links %}
+<header>
+    <a href={% url 'votacao:fazer_upload' %}>
+        <img src="{% if user.fotoperfil.foto_perfil %}{{ user.fotoperfil.foto_perfil.url }}{% else %}{% static 'votacao/images/Default_Avatar.jpg' %}{% endif %}" style="width: 100px">
+    </a>
+    <img src="{% static 'votacao/images/ISCTE.png' %}" style="height: 80px">
+</header>
 
-{% endblock %}
+<nav>
+
+    <a href={% url 'votacao:home' %}>Home</a>
+    {#    <a href={% url 'votacao:loginview' %}>Mudar de conta</a>#}
+    {# inserir logout icon  e criar view.logout TODO #}
+    {% block outros_links %}
+        <h2 style="color: white">Olá {{ user.username }}!</h2>
+    {% endblock %}
+    <a href={% url 'votacao:logoutview' %}>Encerrar Sessão</a>
 </nav>
+
 {% block content %}
-<p>numero de questões respondidas: {{ user.questoes_respondidas }}</p>
+
+<p>numero de questões respondidas: {{ user.aluno.num_respostas }}</p>
 {% if latest_question_list %}
 <ul>
+
  {% for questao in latest_question_list %}
  <li>
 <a href="{% url 'votacao:detalhe' questao.id %}">

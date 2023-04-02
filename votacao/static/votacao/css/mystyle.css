@@ -1,16 +1,22 @@
 header {
-  background-image: url('../images/banner.jpg');
-  background-position: left center;
-  background-repeat: no-repeat;
-  text-align: right;
-  padding: 50px;
+    background-color: whitesmoke;
+    background-repeat: no-repeat;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    height: auto;
+    justify-content: space-between;
+    /*background-image: url('../images/banner.jpg');*/
+    /*background-position: center;*/
+    /*  background-size: cover;*/
 }
 
 body {
-background-image: url('../images/background.jpg');
-background-size: cover;
-color: darkslategrey;
-font-family: Arial, sans-serif;
+    background-image: url('../images/background.jpg');
+    height: auto;
+    color: darkslategrey;
+    font-family: Arial, sans-serif;
     text-align: center;
 }
 
@@ -23,8 +29,8 @@ header h1 {
 }
 
 ul {
-  list-style: none;
-  text-align: center;
+    list-style: none;
+    text-align: center;
     display: flex;
     flex-direction: column;
 }
@@ -39,6 +45,9 @@ nav {
   background-color: #333;
   padding: 10px 20px;
   text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 nav ul {
@@ -97,12 +106,14 @@ form input[type="radio"]:hover {
   background-color: #ccc;
 }
 
+section{
+    padding: 20px;
+}
 
 
 label {
   margin-bottom: 10px;
 }
-
 
 button[type="submit"] {
   background-color: #007bff;

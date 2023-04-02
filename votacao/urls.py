@@ -1,6 +1,7 @@
 from django.urls import include, path
 from . import views
 
+
 # (. significa que importa views da mesma directoria)
 app_name = 'votacao'
 urlpatterns = [
@@ -23,4 +24,6 @@ urlpatterns = [
     path('<int:questao_id>/apagar_questao', views.apagar_questao, name='apagar_questao'),
 
     path('<int:questao_id>/apagar_opcao', views.apagar_opcao, name='apagar_opcao'),
+    path('loginview', views.logoutview, name="logoutview"),
+    path('fazer_upload', views.fazer_upload, name='fazer_upload')
 ]

@@ -3,39 +3,52 @@
 
 {% extends "votacao/home.html" %}
 {% block outros_links %}
-    <a href="{% url 'votacao:editar' questao.id %}">
-        Adicionar opção
-    </a>
-    <a href="{% url 'votacao:apagar_opcao' questao.id %}">
-        Apagar opção
-    </a>
+{#    <a href="{% url 'votacao:editar' questao.id %}">#}
+{#        Adicionar opção#}
+{#    </a>#}
+{#    <a href="{% url 'votacao:apagar_opcao' questao.id %}">#}
+{#        Apagar opção#}
+{#    </a>#}
 {% endblock %}
 {% block content %}
 <body>
 
 <h1>{{ questao.questao_texto }}</h1>
+
 <form action="{% url 'votacao:voto' questao.id %}"
 method="post">
-{% csrf_token %}
-{% for opcao in questao.opcao_set.all %}
-<input type="radio" name="opcao"
-id="opcao{{ forloop.counter }}"
-value="{{ opcao.id }}" />
-<label for="opcao{{ forloop.counter }}">
-{{ opcao.opcao_texto }}
+    {% csrf_token %}
+    {% for opcao in questao.opcao_set.all %}
+    <input type="radio" name="opcao"
+    id="opcao{{ forloop.counter }}"
+    value="{{ opcao.id }}" />
+    <label for="opcao{{ forloop.counter }}">
+    {{ opcao.opcao_texto }}
 
-</label>
-<br />
-{% endfor %}
-<input type="submit" value="Voto" />
+    </label>
+    <br />
+    {% endfor %}
+    <input type="submit" value="Voto" />
 </form>
 
 
 <form method="POST" action="{% url 'votacao:apagar_questao' questao.id %}">
     {% csrf_token %}
-    <button type="submit">Apagar Questão</button>
+    <button type="submit" style="background-color: red">Apagar Questão</button>
 </form>
 
+<section>
+    <button>
+        <a href="{% url 'votacao:editar' questao.id %}">
+            Adicionar opção
+        </a>
+    </button>
+    <button style="">
+        <a href="{% url 'votacao:apagar_opcao' questao.id %}">
+            Apagar opção
+        </a>
+    </button>
+</section>
 
 
 </body>
