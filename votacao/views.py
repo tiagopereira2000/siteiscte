@@ -32,24 +32,23 @@ def loginview(request):
         return render(request, 'votacao/home.html', context)
     return render(request, 'votacao/login.html', {'form': form})
 
+
 from .forms import AlunoRegistrationForm
 def registo(request):
     if request.method == 'POST':
         form = AlunoRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_active = False
+            user.is_active = True
             user.save()
             Aluno.objects.create(
                 user=user,
                 curso=form.cleaned_data.get('curso')
             )
-            return redirect('loginview')
+            return redirect('/votacao/loginview')
     else:
         form = AlunoRegistrationForm()
     return render(request, 'votacao/registo.html', {'form': form})
-
-
 
 
 def detalhe(request, questao_id):
