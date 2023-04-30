@@ -5,22 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2e71c8a5-1e33-4885-97ee-78d6d6ee850f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/siteiscte.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/siteiscte.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/votacao-frontend/src/components/DetalheQuestaoForm.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/votacao-frontend/src/components/DetalheQuestaoModal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/votacao-frontend/src/components/Header.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/votacao-frontend/src/components/Home.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/votacao-frontend/src/components/QuestaoLista.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/votacao-frontend/src/components/VotaForm.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/votacao-frontend/src/components/VotaModal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/votacao-frontend/src/constants/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/votacao/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d1873957-df79-4c87-a104-5bc1fee56a33.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d1873957-df79-4c87-a104-5bc1fee56a33.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysite/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysite/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysite/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/votacao/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/votacao/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/votacao/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/votacao/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/votacao/static/votacao/css/mystyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/votacao/static/votacao/css/mystyle.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/votacao/templates/votacao/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/votacao/templates/votacao/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/votacao/templates/votacao/detalhe.html" beforeDir="false" afterPath="$PROJECT_DIR$/votacao/templates/votacao/detalhe.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/votacao/templates/votacao/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/votacao/templates/votacao/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/votacao/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/votacao/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/votacao/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/votacao/views.py" afterDir="false" />
     </list>
@@ -29,10 +26,24 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="2NsNv2CXdIcXHmL1czkruWUDOVg" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -42,11 +53,14 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/ASUS-Tiago/Ambiente de Trabalho/projeto_diam/siteiscte&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -57,6 +71,7 @@
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="mysite.settings" />
       </envs>
       <option name="SDK_HOME" value="C:\Users\ASUS-Tiago\AppData\Local\Programs\Python\Python39\python.exe" />
       <option name="SDK_NAME" value="Python 3.9" />
@@ -87,10 +102,15 @@
       <workItem from="1680449058716" duration="348000" />
       <workItem from="1680449974976" duration="695000" />
       <workItem from="1680453167381" duration="16855000" />
+      <workItem from="1682873461481" duration="1077000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/siteiscte$manage.coverage" NAME="manage Coverage Results" MODIFIED="1682808465014" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/siteiscte$main.coverage" NAME="main Coverage Results" MODIFIED="1678226575978" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
