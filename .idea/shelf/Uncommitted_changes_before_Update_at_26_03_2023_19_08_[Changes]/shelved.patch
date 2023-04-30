@@ -1,0 +1,138 @@
+Index: votacao/templates/votacao/registo.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <title>Registo utilizador</title>\r\n</head>\r\n<body>\r\n\r\n</body>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/votacao/templates/votacao/registo.html b/votacao/templates/votacao/registo.html
+--- a/votacao/templates/votacao/registo.html	(revision 9ea0552ad194de1b66b2fb87ef6c93a52e917d7c)
++++ b/votacao/templates/votacao/registo.html	(date 1679767045240)
+@@ -5,6 +5,22 @@
+     <title>Registo utilizador</title>
+ </head>
+ <body>
++<form action="{% url 'votacao:registo'%}" method="POST">
++    {% csrf_token %}
++    <label for="username">Username</label>
++    <input type="text" id="username" name="username"/>
++    <br>
++    <label for="email">Email</label>
++    <input type="text" id="email" name="email"/>
++    <br>
++    <label for="curso">Curso</label>
++    <input type="text" id="curso" name="curso"/>
++    <br>
++    <label for="password">Password</label>
++    <input type="text" id="password" name="password"/>
++    <br>
++    <input type="submit" value="registar" id="registar"/>
+ 
++</form>
+ </body>
+ </html>
+\ No newline at end of file
+Index: votacao/templates/votacao/login.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <title>Login</title>\r\n</head>\r\n<body>\r\n<form action=\"{% url 'votacao:loginview' %}\" method=\"POST\">\r\n    {% csrf_token %}\r\n    <label for=\"username\"></label>\r\n    <input type=\"text\" id=\"username\" name=\"username\"/>\r\n    <label for=\"password\"></label>\r\n    <input type=\"text\" id=\"password\" name=\"password\"/>\r\n    <input type=\"submit\" value=\"login\" id=\"login_submit\"/>\r\n</form>\r\n\r\n</body>\r\n</html>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/votacao/templates/votacao/login.html b/votacao/templates/votacao/login.html
+--- a/votacao/templates/votacao/login.html	(revision 9ea0552ad194de1b66b2fb87ef6c93a52e917d7c)
++++ b/votacao/templates/votacao/login.html	(date 1679765003366)
+@@ -7,12 +7,20 @@
+ <body>
+ <form action="{% url 'votacao:loginview' %}" method="POST">
+     {% csrf_token %}
+-    <label for="username"></label>
++    <label for="username">Username</label>
+     <input type="text" id="username" name="username"/>
+-    <label for="password"></label>
++    <br>
++    <label for="password">Password</label>
+     <input type="text" id="password" name="password"/>
++    <br>
+     <input type="submit" value="login" id="login_submit"/>
+ </form>
+ 
++<button>
++    <!--  href -->
++    <a href="{% url 'votacao:registo' %}">
++        registo
++    </a>
++</button>
+ </body>
+ </html>
+\ No newline at end of file
+Index: votacao/views.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from django.shortcuts import render, redirect\r\nfrom django.http import Http404, HttpResponse,HttpResponseRedirect\r\nfrom django.utils import timezone\r\n\r\nfrom .models import Questao, Opcao, Aluno\r\nfrom django.template import loader\r\nfrom django.urls import reverse\r\nfrom django.shortcuts import get_object_or_404, render\r\nfrom django.shortcuts import render\r\nfrom .models import Questao\r\nfrom django.contrib.auth.models import User\r\nfrom django.contrib.auth import authenticate, login\r\n\r\n# Create your views here.\r\n\r\n\r\ndef index(request, this_username):\r\n latest_question_list = Questao.objects.order_by('-pub_data')[:5]\r\n context = {'latest_question_list': latest_question_list,\r\n            'username': this_username}\r\n return render(request, 'votacao/index.html', context)\r\n\r\ndef loginview(request):\r\n if request.method == 'POST':\r\n  # login\r\n  try:\r\n   this_username = request.POST.get(\"username\")\r\n   this_password = request.POST.get(\"password\")\r\n   # autenticacao USER\r\n   user = authenticate(username=this_username, password=this_password)\r\n   if user is not None:\r\n    # utilizador está registado\r\n    login(request, user)\r\n    # ERRO\r\n    HttpResponse(redirect('votacao:index', args=(this_username,)))\r\n   else:\r\n    # utilizador não se encontra na BD\r\n    HttpResponseRedirect(reverse('votacao:loginview'))\r\n  except KeyError:\r\n   ## error page\r\n   Http404(KeyError)\r\n else:\r\n  return render(request, 'votacao/login.html')\r\n\r\ndef detalhe(request, questao_id):\r\n questao = get_object_or_404(Questao, pk=questao_id)\r\n return render(request, 'votacao/detalhe.html', {'questao': questao})\r\n\r\n\r\ndef criar_questao(request):\r\n if request.method == 'POST':\r\n  questao_texto = request.POST['questao_texto']\r\n  questao = Questao.objects.create(questao_texto=questao_texto, pub_data=timezone.now())\r\n  return render(request, 'votacao/detalhe.html', {'questao': questao})\r\n else:\r\n  return render(request, 'votacao/criarquestao.html')\r\n\r\ndef add_opcao(request, questao_id):\r\n questao= get_object_or_404(Questao, pk=questao_id)\r\n context = {'questao': questao}\r\n try:\r\n   opcao_texto = request.POST['opcao_texto']\r\n   questao.opcao_set.create(opcao_texto=opcao_texto, votos = 0)\r\n   return HttpResponseRedirect(reverse('votacao:detalhe', args=(questao_id,)))\r\n except KeyError:\r\n  return render(request, 'votacao/editarquestao.html', context)\r\n\r\n\r\n\r\ndef voto(request, questao_id):\r\n questao = get_object_or_404(Questao, pk=questao_id)\r\n try:\r\n  opcao_seleccionada = questao.opcao_set.get(pk=request.POST['opcao'])\r\n except (KeyError, Opcao.DoesNotExist):\r\n  # Apresenta de novo o form para votar\r\n  return render(request, 'votacao/detalhe.html', {\r\n   'questao': questao,\r\n   'error_message': \"Não escolheu uma opção\",\r\n  })\r\n else:\r\n  opcao_seleccionada.votos += 1\r\n  opcao_seleccionada.save()\r\n  # Retorne sempre HttpResponseRedirect depois de\r\n  # tratar os dados POST de um form\r\n  # pois isso impede os dados de serem tratados\r\n  # repetidamente se o utilizador\r\n  # voltar para a página web anterior.\r\n return HttpResponseRedirect(reverse('votacao:resultados', args=(questao.id,)))\r\n\r\ndef resultados(request, questao_id):\r\n questao = get_object_or_404(Questao, pk=questao_id)\r\n return render(request, 'votacao/resultados.html', {'questao': questao})\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/votacao/views.py b/votacao/views.py
+--- a/votacao/views.py	(revision 9ea0552ad194de1b66b2fb87ef6c93a52e917d7c)
++++ b/votacao/views.py	(date 1679768889340)
+@@ -14,10 +14,9 @@
+ # Create your views here.
+ 
+ 
+-def index(request, this_username):
++def index(request):
+  latest_question_list = Questao.objects.order_by('-pub_data')[:5]
+- context = {'latest_question_list': latest_question_list,
+-            'username': this_username}
++ context = {'latest_question_list': latest_question_list}
+  return render(request, 'votacao/index.html', context)
+ 
+ def loginview(request):
+@@ -85,10 +84,23 @@
+   # pois isso impede os dados de serem tratados
+   # repetidamente se o utilizador
+   # voltar para a página web anterior.
+- return HttpResponseRedirect(reverse('votacao:resultados', args=(questao.id,)))
++  return HttpResponseRedirect(reverse('votacao:resultados', args=(questao.id,)))
+ 
+ def resultados(request, questao_id):
+  questao = get_object_or_404(Questao, pk=questao_id)
+  return render(request, 'votacao/resultados.html', {'questao': questao})
+ 
++def registo(request):
++ if request.method == 'POST':
++  try:
++   novo_user = User.objects.create_user(username=request.POST['username'],
++                            email=request.POST['email'],
++                            password=request.POST['password'])
++   novo_aluno = Aluno(user=novo_user, curso=request.POST['curso'])
++   novo_aluno.save()
++   return render(request, 'votacao/home', {'username': novo_user.username})
+ 
++  except KeyError:
++   return KeyError
++ else:
++  return render(request, 'votacao/registo.html')
+Index: votacao/urls.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from django.urls import include, path\r\nfrom . import views\r\n\r\n# (. significa que importa views da mesma directoria)\r\napp_name = 'votacao'\r\nurlpatterns = [\r\n    path('home', views.index, name=\"index\"),\r\n    # ex: votacao/1\r\n    path('<int:questao_id>', views.detalhe, name=\"detalhe\"),\r\n    # ex: votacao/3/resultados\r\n    path('<int:questao_id>/resultados', views.resultados, name='resultados'),\r\n    # ex: votacao/5/voto\r\n    path('<int:questao_id>/voto', views.voto, name='voto'),\r\n    # ex/votacao/criar\r\n    path('criarquestao', views.criar_questao, name='criar'),\r\n    #ex: votacao/3/editar\r\n    path('<int:questao_id>/editar', views.add_opcao, name=\"editar\"),\r\n    #login\r\n    path('login', views.loginview, name=\"login\"),\r\n\r\n]\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/votacao/urls.py b/votacao/urls.py
+--- a/votacao/urls.py	(revision 9ea0552ad194de1b66b2fb87ef6c93a52e917d7c)
++++ b/votacao/urls.py	(date 1679764468571)
+@@ -15,7 +15,8 @@
+     path('criarquestao', views.criar_questao, name='criar'),
+     #ex: votacao/3/editar
+     path('<int:questao_id>/editar', views.add_opcao, name="editar"),
+-    #login
+-    path('login', views.loginview, name="login"),
+-
++    #logins
++    path('login', views.loginview, name="loginview"),
++    #registo
++    path('registo', views.registo, name="registo"),
+ ]

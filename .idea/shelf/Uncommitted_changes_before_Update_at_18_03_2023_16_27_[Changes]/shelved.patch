@@ -1,0 +1,37 @@
+Index: votacao/views.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from django.shortcuts import render\r\nfrom django.http import HttpResponse\r\nfrom .models import Questao\r\n\r\n# Create your views here.\r\n\r\ndef index(request):\r\n latest_question_list = Questao.objects.order_by('-pub_data')[:5]\r\n output = ', '.join([q.questao_texto for q in latest_question_list])\r\n return HttpResponse(output)\r\n\r\ndef detalhe(request, questao_id):\r\n return HttpResponse(\"Esta e a questao %s.\" % questao_id)\r\n\r\ndef resultados(request, questao_id):\r\n response = \"Estes sao os resultados da questao %s.\"\r\n return HttpResponse(response % questao_id)\r\n\r\ndef voto(request, questao_id):\r\n return HttpResponse(\"Votacao na questao %s.\" % questao_id)
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/votacao/views.py b/votacao/views.py
+--- a/votacao/views.py	(revision cd1a4bc38c4fec956dd6bb78c58ab712191994eb)
++++ b/votacao/views.py	(date 1679154359790)
+@@ -1,13 +1,14 @@
+ from django.shortcuts import render
+ from django.http import HttpResponse
+ from .models import Questao
+-
++from django.template import loader
++from django.shortcuts import render
+ # Create your views here.
+ 
+ def index(request):
+  latest_question_list = Questao.objects.order_by('-pub_data')[:5]
+- output = ', '.join([q.questao_texto for q in latest_question_list])
+- return HttpResponse(output)
++ context = {'latest_question_list': latest_question_list}
++ return render(request, 'votacao/index.html', context)
+ 
+ def detalhe(request, questao_id):
+  return HttpResponse("Esta e a questao %s." % questao_id)
+@@ -17,4 +18,6 @@
+  return HttpResponse(response % questao_id)
+ 
+ def voto(request, questao_id):
+- return HttpResponse("Votacao na questao %s." % questao_id)
+\ No newline at end of file
++ return HttpResponse("Votacao na questao %s." % questao_id)
++
++
