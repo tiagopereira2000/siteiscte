@@ -3,7 +3,7 @@
 
 {% extends "votacao/home.html" %}
 {% block outros_links %}
-    <a href="{% url 'votacao:editar' questao.id %}">
+    <a href="{% url 'votacao:editar' questao.id%}">
         Adicionar opção
     </a>
     <a href="{% url 'votacao:apagar_opcao' questao.id %}">

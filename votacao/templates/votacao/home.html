@@ -18,7 +18,7 @@
 {% endblock %}
 </nav>
 {% block content %}
-<p>numero de questões respondidas: {{ user.questoes_respondidas }}</p>
+<p>numero de questões respondidas: {{ user.questoes_respondidas.len }}</p>
 {% if latest_question_list %}
 <ul>
  {% for questao in latest_question_list %}
